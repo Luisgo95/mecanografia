@@ -10,6 +10,12 @@ document.getElementById("text").innerHTML = string1 + "<div id='linea' class='w-
 window.addEventListener("load", () => {
     document.getElementById("oscuro").addEventListener("click", () => { cambiartema(true) });
     document.getElementById("claro").addEventListener("click", () => { cambiartema(false) });
+    document.getElementById("modallauncher").addEventListener("click", () => {
+        setTimeout(()=>{
+            document.getElementsByTagName("input")[0].focus();
+        },460)
+        
+    })
     document.getElementById("start").addEventListener("click", () => {
         window.removeEventListener("keydown", press);
         keystring = "";
@@ -35,12 +41,12 @@ function cambiartema(oscuro) {
         document.body.style.backgroundColor = "var(--dark1)";
         document.body.style.color = "#cccccc";
         tema = oscuro;
-        document.getElementById("modallauncher").setAttribute("class","text-center bg-dark px-3 rounded-left");
+        document.getElementById("modallauncher").setAttribute("class", "text-center bg-dark px-3 rounded-left");
     } else {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
         tema = oscuro;
-        document.getElementById("modallauncher").setAttribute("class","text-center bg-light px-3 rounded-left");
+        document.getElementById("modallauncher").setAttribute("class", "text-center bg-light px-3 rounded-left");
     }
 }
 
