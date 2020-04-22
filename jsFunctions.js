@@ -47,7 +47,7 @@ function press() {
     if (event.key == "Backspace") {
         keystring = keystring.slice(0, -1);
     } else if (event.keyCode < 112 || event.keyCode > 143) {
-        if (event.keyCode > 46 && event.keyCode != 145 || event.keyCode == 32) {
+        if (event.keyCode > 46 && event.keyCode != 145 && event.keyCode != 144 || event.keyCode == 32) {
             if (event.key != "Dead") {
                 keystring += event.key;
             }
