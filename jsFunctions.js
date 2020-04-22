@@ -4,7 +4,7 @@ var fallos = 0;
 var inicio = 0;
 var primero = true;
 var string1 = tpd;
-var tema = true;
+var tema = false;
 document.getElementById("text").innerHTML = string1 + "<div id='linea' class='w-100'></div>";
 
 window.addEventListener("load", () => {
