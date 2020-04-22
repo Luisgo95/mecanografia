@@ -4,25 +4,29 @@ var fallos = 0;
 var inicio = 0;
 var primero = true;
 var string1 = tpd;
-var tema = false;
+var tema = true;
 document.getElementById("text").innerHTML = string1 + "<div id='linea' class='w-100'></div>";
 
 window.addEventListener("load", () => {
     document.getElementById("oscuro").addEventListener("click", () => { cambiartema(true) });
     document.getElementById("claro").addEventListener("click", () => { cambiartema(false) });
-    document.getElementById("escribir").addEventListener("click", () => {
+    document.getElementById("start").addEventListener("click", () => {
         window.removeEventListener("keydown", press);
+        keystring = "";
+        fallos = 0;
+        inicio = 0;
+        primero = true;
+        window.addEventListener("keydown", press);
+        document.getElementById("text").innerHTML = string1 + "<div id='linea' class='w-100'></div>";
+    });
+    document.getElementById("cambiar").addEventListener("click", () => {
         if (document.getElementsByTagName("input")[0].value != "") {
             string1 = document.getElementsByTagName("input")[0].value;
         } else {
             string1 = tpd;
         }
         document.getElementById("text").innerHTML = string1 + "<div id='linea' class='w-100'></div>";
-        keystring = "";
-        fallos = 0;
-        inicio = 0;
-        primero = true;
-        window.addEventListener("keydown", press)
+        window.removeEventListener("keydown", press);
     });
 })
 
@@ -31,12 +35,13 @@ function cambiartema(oscuro) {
         document.body.style.backgroundColor = "var(--dark1)";
         document.body.style.color = "#cccccc";
         tema = oscuro;
+        document.getElementById("modallauncher").setAttribute("class","text-center bg-dark px-3 rounded-left");
     } else {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
         tema = oscuro;
+        document.getElementById("modallauncher").setAttribute("class","text-center bg-light px-3 rounded-left");
     }
-
 }
 
 
@@ -82,6 +87,7 @@ function press() {
             }
         }
     }
+    console.log(document.getElementById("scroll").offsetTop)
     document.getElementById("text").scroll({
         top: document.getElementById("scroll").offsetTop - 57,
         left: 0,
