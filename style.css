@@ -1,5 +1,5 @@
 .text-monospace{
-    font-size: 3rem;
+    font-size: 35px;
     word-wrap: break-word;
 }
 .bg-muted{
@@ -11,4 +11,12 @@ a, a:hover{
 a:hover span{
     background-color: rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 2px 3px rgba(0, 110, 255, .1);
+}
+#text{
+    height: 160px;
+    overflow: hidden;
+}
+#linea{
+    outline: 1px solid var(--primary);
+    margin-top: -4px;
 }
