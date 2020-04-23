@@ -75,7 +75,7 @@ function cambiartema(oscuro) {
         if (document.getElementById("text").children[0].className == "text-primary" || document.getElementById("text").children[0].className == "text-danger") {
             document.getElementById("text").children[0].setAttribute("style", "background-color:rgba(0, 0, 0, .1);");
         }
-        document.getElementById("modallauncher").setAttribute("class", "text-center bg-dark py-2 px-3 text-monospace text-small rounded-left");
+        document.getElementById("modallauncher").setAttribute("class", "text-center bg-light py-2 px-3 text-monospace text-small rounded-left");
     }
 }
 
@@ -93,9 +93,9 @@ function press() {
                 }
             }
             if (tema) {
-                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .4);'>" + keystring.value.replace(/ /g, "&nbsp;") + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.value.length, string1.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .4);'>" + keystring.value.replace(/  +/g, (match) => {return " " + Array(match.length).join('&nbsp;')}) + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.value.length, string1.length)) + "<div id='linea' class='w-100'></div>";
             } else {
-                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/ /g, "&nbsp;") + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.value.length, string1.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => {return " " + Array(match.length).join('&nbsp;')}) + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.value.length, string1.length)) + "<div id='linea' class='w-100'></div>";
             }
             document.getElementById("ppm").innerHTML = Math.round((keystring.value.split(" ").length / ((Date.now() - inicio) / 1000 / 60)) * 100) / 100 + " ppm";
             if (keystring.value.length == string1.length) {
@@ -106,9 +106,9 @@ function press() {
             }
         } else {
             if (tema) {
-                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .4);'>" + keystring.value.replace(/ /g, "&nbsp;") + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.value.length, string1.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .4);'>" + keystring.value.replace(/  +/g, (match) => {return " " + Array(match.length).join('&nbsp;')}) + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.value.length, string1.length)) + "<div id='linea' class='w-100'></div>";
             } else {
-                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/ /g, "&nbsp;") + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.value.length, string1.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => {return " " + Array(match.length).join('&nbsp;')}) + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.value.length, string1.length)) + "<div id='linea' class='w-100'></div>";
             }
             if (e.key != "Backspace") {
                 if (primero == false) {
