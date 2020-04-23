@@ -81,7 +81,6 @@ function cambiartema(oscuro) {
 }
 
 function press() {
-    console.log(event)
     var e = event
     setTimeout(() => {
         if (e.keyCode == 32) {
@@ -100,6 +99,7 @@ function press() {
                 document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => {return " " + Array(match.length).join('&nbsp;')}) + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.value.length, string1.length)) + "<div id='linea' class='w-100'></div>";
             }
             document.getElementById("ppm").innerHTML = Math.round((keystring.value.split(" ").length / ((Date.now() - inicio) / 1000 / 60)) * 100) / 100 + " ppm";
+            
             if (keystring.value.length == string1.length) {
                 document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
                 inicio = 0;
