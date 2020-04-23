@@ -24,6 +24,9 @@ body {
 
 a, a:hover {
     text-decoration: none;
+    -moz-appearance: none!important;
+    -webkit-appearance: none!important;
+    appearance: none!important;
 }
 
 #text {
@@ -90,10 +93,10 @@ a, a:hover {
 }
 
 @media only screen and (max-width: 575px) {
-    .text-justify{
+    .text-justify {
         text-align: justify!important;
     }
-    #text{
+    #text {
         padding: 0px;
     }
     .text-monospace {

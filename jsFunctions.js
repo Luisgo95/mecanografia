@@ -1,5 +1,5 @@
 const tpd = "Cuando bajé del avión, el hombre me esperaba con un pedazo de cartón en el que estaba escrito mi nombre. Yo iba a una conferencia de científicos y comentaristas de televisión dedicada a la aparentemente imposible tarea de mejorar la presentación de la ciencia en la televisión comercial. Amablemente, los organizadores me habían enviado un chófer."
-var keystring = document.getElementById("contenteditable");
+const keystring = document.getElementById("contenteditable");
 var fallos = 0;
 var inicio = 0;
 var primero = true;
@@ -9,10 +9,10 @@ document.getElementById("text").innerHTML = string1 + "<div id='linea' class='w-
 window.addEventListener("click", () => {
     if (event.target.id != "start") {
         document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
-        window.removeEventListener("keydown", press);
+        keystring.removeEventListener("keyup", press);
     }
 });
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("oscuro").addEventListener("click", () => { cambiartema(true) });
     document.getElementById("claro").addEventListener("click", () => { cambiartema(false) });
     document.getElementById("modallauncher").addEventListener("click", () => {
@@ -21,13 +21,14 @@ window.addEventListener("load", () => {
         }, 460)
     });
     document.getElementById("start").addEventListener("click", () => {
-        window.removeEventListener("keydown", press);
+        keystring.removeEventListener("keyup", press);
         keystring.blur();
         keystring.value = "";
         fallos = 0;
         inicio = 0;
         primero = true;
-        window.addEventListener("keydown", press);
+        keystring.addEventListener("keyup", press);
+        keystring.addEventListener("keydown", press);
         if (tema) {
             document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, .1)"
         } else {
@@ -54,7 +55,7 @@ window.addEventListener("load", () => {
             left: 0,
             behavior: 'smooth'
         });
-        window.removeEventListener("keydown", press);
+        keystring.removeEventListener("keyup", press);
         keystring.blur();
     });
 })
@@ -80,6 +81,7 @@ function cambiartema(oscuro) {
 }
 
 function press() {
+    console.log(event)
     var e = event
     setTimeout(() => {
         if (e.keyCode == 32) {
@@ -101,7 +103,7 @@ function press() {
             if (keystring.value.length == string1.length) {
                 document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
                 inicio = 0;
-                window.removeEventListener("keydown", press);
+                keystring.removeEventListener("keyup", press);
                 keystring.blur();
             }
         } else {
