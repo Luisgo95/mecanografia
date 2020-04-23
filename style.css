@@ -24,6 +24,7 @@ a, a:hover {
 
 #text {
     height: 160px;
+    padding: 2px 15px 15px 15px;
     overflow: hidden;
     border-bottom: 0px solid var(--danger);
 }
@@ -49,6 +50,7 @@ a, a:hover {
 }
 
 .bg-light {
+    background-color: #f0f0f0!important;
     color: var(--dark1)!important;
     text-decoration: none;
 }

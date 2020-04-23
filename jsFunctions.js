@@ -11,10 +11,9 @@ window.addEventListener("load", () => {
     document.getElementById("oscuro").addEventListener("click", () => { cambiartema(true) });
     document.getElementById("claro").addEventListener("click", () => { cambiartema(false) });
     document.getElementById("modallauncher").addEventListener("click", () => {
-        setTimeout(()=>{
+        setTimeout(() => {
             document.getElementsByTagName("input")[0].focus();
-        },460)
-        
+        }, 460)
     })
     document.getElementById("start").addEventListener("click", () => {
         window.removeEventListener("keydown", press);
@@ -23,7 +22,18 @@ window.addEventListener("load", () => {
         inicio = 0;
         primero = true;
         window.addEventListener("keydown", press);
+        if (tema) {
+            document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, .1)"
+        } else {
+            document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, .05)"
+        }
         document.getElementById("text").innerHTML = string1 + "<div id='linea' class='w-100'></div>";
+        document.getElementById("text").scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+
     });
     document.getElementById("cambiar").addEventListener("click", () => {
         if (document.getElementsByTagName("input")[0].value != "") {
@@ -32,6 +42,12 @@ window.addEventListener("load", () => {
             string1 = tpd;
         }
         document.getElementById("text").innerHTML = string1 + "<div id='linea' class='w-100'></div>";
+        document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
+        document.getElementById("text").scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
         window.removeEventListener("keydown", press);
     });
 })
@@ -41,12 +57,24 @@ function cambiartema(oscuro) {
         document.body.style.backgroundColor = "var(--dark1)";
         document.body.style.color = "#cccccc";
         tema = oscuro;
-        document.getElementById("modallauncher").setAttribute("class", "text-center bg-dark px-3 rounded-left");
+        if (inicio != 0) {
+            document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, .1)";
+        }
+        if(document.getElementById("text").children[0].className=="text-primary" || document.getElementById("text").children[0].className=="text-danger"){
+            document.getElementById("text").children[0].setAttribute("style","background-color:rgba(0, 0, 0, .4);");
+        }
+        document.getElementById("modallauncher").setAttribute("class", "text-center bg-dark py-2 px-3 rounded-left");
     } else {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
         tema = oscuro;
-        document.getElementById("modallauncher").setAttribute("class", "text-center bg-light px-3 rounded-left");
+        if (inicio != 0) {
+            document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, .05)";
+        }
+        if(document.getElementById("text").children[0].className=="text-primary" || document.getElementById("text").children[0].className=="text-danger"){
+            document.getElementById("text").children[0].setAttribute("style","background-color:rgba(0, 0, 0, .1);");
+        }
+        document.getElementById("modallauncher").setAttribute("class", "text-center bg-light py-2 px-3 rounded-left");
     }
 }
 
@@ -69,23 +97,24 @@ function press() {
             if (primero) {
                 inicio = Date.now();
                 primero = false;
-
             }
         }
         if (tema) {
             document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .4);'>" + keystring + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.length, string1.length)) + "<div id='linea' class='w-100'></div>";
         } else {
-            document.getElementById("text").innerHTML = "<span class='text-primary bg-muted'>" + keystring + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.length, string1.length)) + "<div id='linea' class='w-100'></div>";
+            document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .1);'>" + keystring + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.length, string1.length)) + "<div id='linea' class='w-100'></div>";
         }
         document.getElementById("ppm").innerHTML = Math.round((keystring.split(" ").length / ((Date.now() - inicio) / 1000 / 60)) * 100) / 100 + " ppm";
         if (keystring.length == string1.length) {
+            document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
+            inicio = 0;
             window.removeEventListener("keydown", press);
         }
     } else {
         if (tema) {
             document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .4);'>" + keystring + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.length, string1.length)) + "<div id='linea' class='w-100'></div>";
         } else {
-            document.getElementById("text").innerHTML = "<span class='text-danger bg-muted'>" + keystring + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.length, string1.length)) + "<div id='linea' class='w-100'></div>";
+            document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .1);'>" + keystring + "</span>" + "<span id='scroll'></span>" + (string1.substring(keystring.length, string1.length)) + "<div id='linea' class='w-100'></div>";
         }
         if (event.key != "Backspace") {
             if (primero == false) {
@@ -93,9 +122,8 @@ function press() {
             }
         }
     }
-    console.log(document.getElementById("scroll").offsetTop)
     document.getElementById("text").scroll({
-        top: document.getElementById("scroll").offsetTop - 57,
+        top: document.getElementById("scroll").offsetTop - 60,
         left: 0,
         behavior: 'smooth'
     });
