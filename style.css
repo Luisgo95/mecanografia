@@ -36,6 +36,12 @@ a, a:hover {
     border-bottom: 0px solid var(--danger);
 }
 
+#titulo{
+    font-size: 15px;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
 #linea {
     outline: 1px solid var(--primary);
     margin-top: -4px;
@@ -90,6 +96,11 @@ a, a:hover {
     .text-small {
         font-size: 20px;
     }
+    #titulo{
+        font-size: 12px;
+        font-weight: bolder;
+        text-decoration: underline;
+    }
 }
 
 @media only screen and (max-width: 575px) {
@@ -105,5 +116,10 @@ a, a:hover {
     }
     .text-small {
         font-size: 20px;
+    }
+    #titulo{
+        font-size: 10px;
+        font-weight: bolder;
+        text-decoration: underline;
     }
 }
