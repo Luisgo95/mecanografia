@@ -163,7 +163,7 @@ function press() {
             }
         }
         document.getElementById("text").scroll({
-            top: document.getElementById("scroll").offsetTop - 60,
+            top: document.getElementById("scroll").offsetTop - 85,
             left: 0,
             behavior: 'smooth'
         });
