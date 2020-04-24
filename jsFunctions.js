@@ -1,32 +1,41 @@
 function leerJSON() {
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", "text.json", false);
-    var result={};
-    rawFile.onreadystatechange = () => {
-        if (rawFile.readyState === 4 && rawFile.status === 200 || rawFile.status == 0) {
-            let a = JSON.parse(rawFile.responseText);
-            let s=a.la_llegada_de_los_marcianos["capitulo_" + (Math.round(Math.random() * 17) + 1)]
-            let r= Math.round(Math.random() * s.contenido.length);
-            if(r>s.contenido.length-300){
-                r-=300;
-            }
-            result.titulo=Object.keys(a)[0].replace(/_/g," ")+" - "+s.titulo;
-            let ss1=s.contenido.substring(r, s.contenido.length)
-            let p1= ss1.indexOf(".")
-            let ss2=ss1.substring(p1+2, ss1.length)
-            let p2=ss2.indexOf(".")
-            if (p2+1<150) {
-                let ss3=ss2.substring(p2+2, ss2.length)
-                let p3=ss3.indexOf(".")
-                result.contenido=ss2.substring(0, p2+p3+3)
-                console.log(1)
+    var request = new XMLHttpRequest();
+    request.open("GET", "text.json", false);
+    var result = {};
+    request.onreadystatechange = () => {
+        if (request.readyState === 4 && request.status === 200 || request.status == 0) {
+            let a = JSON.parse(request.responseText);
+            let random1 = Math.round(Math.random() * 1);
+            if (random1 == 0) {
+                var random2 = (Math.round(Math.random() * 16) + 1);
             }else{
-                result.contenido=ss2.substring(0, p2+1)
-                console.log(2)
+                var random2 = (Math.round(Math.random() * 9) + 1);
+            }
+            var s = a[Object.keys(a)[random1]]["capitulo_" + random2];
+            console.log(random1, random2)
+            let random3 = Math.round(Math.random() * s.contenido.length);
+            console.log(Math.round(Math.random() * s.contenido.length))
+            if (random3 > s.contenido.length - 300) {
+                random3 -= 300;
+            }
+            result.titulo = Object.keys(a)[random1].replace(/_/g, " ") + " - " + s.titulo;
+            let ss1 = s.contenido.substring(random3, s.contenido.length);
+            let p1 = ss1.indexOf(".");
+            let ss2 = ss1.substring(p1 + 2, ss1.length);
+            let p2 = ss2.indexOf(".");
+            console.log("libro: " + Object.keys(a)[random1]);
+            if (p2 + 1 < 150) {
+                let ss3 = ss2.substring(p2 + 2, ss2.length);
+                let p3 = ss3.indexOf(".");
+                result.contenido = ss2.substring(0, p2 + p3 + 3);
+                console.log("opcion 1");
+            } else {
+                result.contenido = ss2.substring(0, p2 + 1);
+                console.log("opcion 2");
             }
         }
     }
-    rawFile.send(null);
+    request.send(null);
     return result;
 }
 
@@ -36,13 +45,13 @@ var fallos = 0;
 var inicio = 0;
 var primero = true;
 var texto = leerJSON();
-if (texto.contenido==undefined) {
-    texto.titulo="PREDETERMINADO";
-    texto.contenido=tpd;
+if (texto.contenido == undefined) {
+    texto.titulo = "PREDETERMINADO";
+    texto.contenido = tpd;
 }
 var tema = true;
 document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
-document.getElementById("titulo").innerHTML=texto.titulo;
+document.getElementById("titulo").innerHTML = texto.titulo;
 window.addEventListener("click", () => {
     if (event.target.id != "start") {
         document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
@@ -82,12 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("cambiar").addEventListener("click", () => {
         if (document.getElementsByTagName("input")[0].value != "") {
             texto.contenido = document.getElementsByTagName("input")[0].value.replace(/\s+/g, ' ');
-            document.getElementById("titulo").innerHTML="";
+            document.getElementById("titulo").innerHTML = "";
         } else {
             texto = leerJSON()
-            if (texto.contenido==undefined) {
-                texto.titulo="PREDETERMINADO";
-                texto.contenido=tpd;
+            if (texto.contenido == undefined) {
+                texto.titulo = "PREDETERMINADO";
+                texto.contenido = tpd;
             }
         }
         document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
