@@ -8,7 +8,7 @@ function leerJSON() {
             let random1 = Math.round(Math.random() * 1);
             if (random1 == 0) {
                 var random2 = (Math.round(Math.random() * 16) + 1);
-            }else{
+            } else {
                 var random2 = (Math.round(Math.random() * 9) + 1);
             }
             var s = a[Object.keys(a)[random1]]["capitulo_" + random2];
@@ -18,29 +18,25 @@ function leerJSON() {
             if (random3 > s.contenido.length - 300) {
                 random3 -= 300;
             }
-            result.titulo = Object.keys(a)[random1].replace(/_/g, " ") + " - " + s.titulo;
-            let ss1 = s.contenido.substring(random3, s.contenido.length);
-            let p1 = ss1.indexOf(".");
-            let ss2 = ss1.substring(p1 + 2, ss1.length);
-            let p2 = ss2.indexOf(".");
-            console.log("libro: " + Object.keys(a)[random1]);
-            if (p2 + 1 < 150) {
-                let ss3 = ss2.substring(p2 + 2, ss2.length);
-                let p3 = ss3.indexOf(".");
-                result.contenido = ss2.substring(0, p2 + p3 + 3).replace(/\"/g,'"');
-                console.log("opcion 1");
-            } else {
-                result.contenido = ss2.substring(0, p2 + 1).replace(/\"/g,'"');
-                console.log("opcion 2");
+            var str = "";
+            var ss = s.contenido.substring(random3, s.contenido.length);
+            var p = ss.indexOf(".");
+            for (let i = 0; i < Math.random() * 2+1; i++) {
+                console.log(i)
+                ss = ss.substring(p+2, ss.length);
+                p = ss.indexOf(".");
+                str +=ss.substring(0, p + 2)
+                console.log(str.substring(0,str.length-1))
+                result.contenido=str.substring(0,str.length-1);
             }
+            result.titulo = Object.keys(a)[random1].replace(/_/g, " ") + " - " + s.titulo;
         }
     }
     if (result.contenido == undefined) {
-        result = {contenido:tpd, titulo:"PREDETERMINADO"};
+        result = { contenido: tpd, titulo: "PREDETERMINADO" };
     }
     request.send(null);
     return result;
-    
 }
 
 const tpd = "Cuando bajé del avión, el hombre me esperaba con un pedazo de cartón en el que estaba escrito mi nombre. Yo iba a una conferencia de científicos y comentaristas de televisión dedicada a la aparentemente imposible tarea de mejorar la presentación de la ciencia en la televisión comercial. Amablemente, los organizadores me habían enviado un chófer."
@@ -48,7 +44,8 @@ const keystring = document.getElementById("contenteditable");
 var fallos = 0;
 var inicio = 0;
 var primero = true;
-var texto = {contenido:tpd, titulo:"PREDETERMINADO"};
+// var texto = {contenido:tpd, titulo:"PREDETERMINADO"};
+var texto = leerJSON();
 var tema = true;
 document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
 document.getElementById("titulo").innerHTML = texto.titulo;
