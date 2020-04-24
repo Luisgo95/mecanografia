@@ -36,11 +36,11 @@ function leerJSON() {
         }
     }
     if (result.contenido == undefined) {
-        texto.titulo = "PREDETERMINADO";
-        texto.contenido = tpd;
+        result = {contenido:tpd, titulo:"PREDETERMINADO"};
     }
     request.send(null);
     return result;
+    
 }
 
 const tpd = "Cuando bajé del avión, el hombre me esperaba con un pedazo de cartón en el que estaba escrito mi nombre. Yo iba a una conferencia de científicos y comentaristas de televisión dedicada a la aparentemente imposible tarea de mejorar la presentación de la ciencia en la televisión comercial. Amablemente, los organizadores me habían enviado un chófer."
@@ -48,7 +48,7 @@ const keystring = document.getElementById("contenteditable");
 var fallos = 0;
 var inicio = 0;
 var primero = true;
-var texto = leerJSON();
+var texto = {contenido:tpd, titulo:"PREDETERMINADO"};
 var tema = true;
 document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
 document.getElementById("titulo").innerHTML = texto.titulo;
@@ -94,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("titulo").innerHTML = "";
         } else {
             texto = leerJSON()
+            document.getElementById("titulo").innerHTML = texto.titulo;
         }
         document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
         document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
