@@ -27,13 +27,17 @@ function leerJSON() {
             if (p2 + 1 < 150) {
                 let ss3 = ss2.substring(p2 + 2, ss2.length);
                 let p3 = ss3.indexOf(".");
-                result.contenido = ss2.substring(0, p2 + p3 + 3);
+                result.contenido = ss2.substring(0, p2 + p3 + 3).replace(/\"/g,'"');
                 console.log("opcion 1");
             } else {
-                result.contenido = ss2.substring(0, p2 + 1);
+                result.contenido = ss2.substring(0, p2 + 1).replace(/\"/g,'"');
                 console.log("opcion 2");
             }
         }
+    }
+    if (result.contenido == undefined) {
+        texto.titulo = "PREDETERMINADO";
+        texto.contenido = tpd;
     }
     request.send(null);
     return result;
@@ -45,10 +49,6 @@ var fallos = 0;
 var inicio = 0;
 var primero = true;
 var texto = leerJSON();
-if (texto.contenido == undefined) {
-    texto.titulo = "PREDETERMINADO";
-    texto.contenido = tpd;
-}
 var tema = true;
 document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
 document.getElementById("titulo").innerHTML = texto.titulo;
@@ -94,10 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("titulo").innerHTML = "";
         } else {
             texto = leerJSON()
-            if (texto.contenido == undefined) {
-                texto.titulo = "PREDETERMINADO";
-                texto.contenido = tpd;
-            }
         }
         document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
         document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
