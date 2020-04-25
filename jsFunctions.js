@@ -12,9 +12,7 @@ function leerJSON() {
                 var random2 = (Math.round(Math.random() * 9) + 1);
             }
             var s = a[Object.keys(a)[random1]]["capitulo_" + random2];
-            console.log(random1, random2)
             let random3 = Math.round(Math.random() * s.contenido.length);
-            console.log(Math.round(Math.random() * s.contenido.length))
             if (random3 > s.contenido.length - 300) {
                 random3 -= 300;
             }
@@ -22,11 +20,9 @@ function leerJSON() {
             var ss = s.contenido.substring(random3, s.contenido.length);
             var p = ss.indexOf(".");
             for (let i = 0; i < Math.random() * 2+1; i++) {
-                console.log(i)
                 ss = ss.substring(p+2, ss.length);
                 p = ss.indexOf(".");
                 str +=ss.substring(0, p + 2)
-                console.log(str.substring(0,str.length-1))
                 result.contenido=str.substring(0,str.length-1);
             }
             result.titulo = Object.keys(a)[random1].replace(/_/g, " ") + " - " + s.titulo;
@@ -110,7 +106,7 @@ function cambiartema(oscuro) {
         document.body.style.color = "#cccccc";
         tema = oscuro;
         if (document.getElementById("text").children[0].className == "text-primary" || document.getElementById("text").children[0].className == "text-danger") {
-            document.getElementById("text").children[0].setAttribute("style", "background-color:rgba(0, 0, 0, .4);");
+            document.getElementById("text").children[0].setAttribute("style", "background-color:rgba(0, 0, 0, .5);");
         }
         document.getElementById("modallauncher").setAttribute("class", "text-center bg-dark py-2 px-3 text-monospace text-small rounded-left");
     } else {
@@ -127,9 +123,6 @@ function cambiartema(oscuro) {
 function press() {
     var e = event
     setTimeout(() => {
-        if (e.keyCode == 32) {
-            e.preventDefault();
-        }
         if (texto.contenido.startsWith(keystring.value)) {
             if (keystring.value.length > 0) {
                 if (primero) {
@@ -138,7 +131,7 @@ function press() {
                 }
             }
             if (tema) {
-                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .4);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .5);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             } else {
                 document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             }
@@ -152,12 +145,12 @@ function press() {
             }
         } else {
             if (tema) {
-                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .4);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .5);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             } else {
                 document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             }
             if (e.key != "Backspace") {
-                if (primero == false) {
+                if (e.type=="keyup" && primero == false) {
                     fallos++;
                 }
             }
