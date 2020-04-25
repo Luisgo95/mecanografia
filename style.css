@@ -14,8 +14,9 @@ body {
 }
 
 .text-monospace {
+    font-family: 'Inconsolata', monospace!important;
+    font-weight: 500;
     font-size: 35px;
-    word-wrap: break-word;
 }
 
 .text-small {
