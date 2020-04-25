@@ -19,11 +19,11 @@ function leerJSON() {
             var str = "";
             var ss = s.contenido.substring(random3, s.contenido.length);
             var p = ss.indexOf(".");
-            for (let i = 0; i < Math.random() * 2+1; i++) {
-                ss = ss.substring(p+2, ss.length);
+            for (let i = 0; i < Math.random() * 2 + 1; i++) {
+                ss = ss.substring(p + 2, ss.length);
                 p = ss.indexOf(".");
-                str +=ss.substring(0, p + 2)
-                result.contenido=str.substring(0,str.length-1);
+                str += ss.substring(0, p + 2)
+                result.contenido = str.substring(0, str.length - 1);
             }
             result.titulo = Object.keys(a)[random1].replace(/_/g, " ") + " - " + s.titulo;
         }
@@ -40,7 +40,7 @@ const keystring = document.getElementById("contenteditable");
 var fallos = 0;
 var inicio = 0;
 var primero = true;
-var texto = {contenido:tpd, titulo:"PREDETERMINADO"};
+var texto = { contenido: tpd, titulo: "PREDETERMINADO" };
 var tema = true;
 document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
 document.getElementById("titulo").innerHTML = texto.titulo;
@@ -72,6 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, .05)"
         }
+        document.getElementById("fallos").innerHTML = "fallos: " + fallos + ", el 0%";
+        document.getElementById("ppm").innerHTML = "0 ppm";
         document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
         document.getElementById("text").scroll({
             top: 0,
@@ -150,7 +152,7 @@ function press() {
                 document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             }
             if (e.key != "Backspace") {
-                if (e.type=="keyup" && primero == false) {
+                if (e.type == "keyup" && primero == false) {
                     fallos++;
                 }
             }
