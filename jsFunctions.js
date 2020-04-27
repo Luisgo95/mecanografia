@@ -137,7 +137,7 @@ function press() {
             } else {
                 document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             }
-            document.getElementById("ppm").innerHTML = Math.round((keystring.value.split(" ").length / ((Date.now() - inicio) / 1000 / 60)) * 100) / 100 + " ppm";
+            document.getElementById("ppm").innerHTML = Math.round((keystring.value.length/5 / ((Date.now() - inicio) / 1000 / 60)) * 100) / 100 + " ppm";
 
             if (keystring.value.length == texto.contenido.length) {
                 document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
