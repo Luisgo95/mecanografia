@@ -1,40 +1,3 @@
-function leerJSON() {
-    var request = new XMLHttpRequest();
-    request.open("GET", "text.json", false);
-    var result = {};
-    request.onreadystatechange = () => {
-        if (request.readyState === 4 && request.status === 200 || request.status == 0) {
-            let a = JSON.parse(request.responseText);
-            let random1 = Math.round(Math.random() * 1);
-            if (random1 == 0) {
-                var random2 = (Math.round(Math.random() * 16) + 1);
-            } else {
-                var random2 = (Math.round(Math.random() * 9) + 1);
-            }
-            var s = a[Object.keys(a)[random1]]["capitulo_" + random2];
-            let random3 = Math.round(Math.random() * s.contenido.length);
-            if (random3 > s.contenido.length - 300) {
-                random3 -= 300;
-            }
-            var str = "";
-            var ss = s.contenido.substring(random3, s.contenido.length);
-            var p = ss.indexOf(".");
-            for (let i = 0; i < Math.random() * 2 + 1; i++) {
-                ss = ss.substring(p + 2, ss.length);
-                p = ss.indexOf(".");
-                str += ss.substring(0, p + 2)
-                result.contenido = str.substring(0, str.length - 1);
-            }
-            result.titulo = Object.keys(a)[random1].replace(/_/g, " ") + " - " + s.titulo;
-        }
-    }
-    if (result.contenido == undefined) {
-        result = { contenido: tpd, titulo: "PREDETERMINADO" };
-    }
-    request.send(null);
-    return result;
-}
-
 const tpd = "Cuando bajé del avión, el hombre me esperaba con un pedazo de cartón en el que estaba escrito mi nombre. Yo iba a una conferencia de científicos y comentaristas de televisión dedicada a la aparentemente imposible tarea de mejorar la presentación de la ciencia en la televisión comercial. Amablemente, los organizadores me habían enviado un chófer."
 const keystring = document.getElementById("contenteditable");
 var fallos = 0;
@@ -86,11 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (document.getElementsByTagName("input")[0].value != "") {
             texto.contenido = document.getElementsByTagName("input")[0].value.replace(/\s+/g, ' ');
             document.getElementById("titulo").innerHTML = "";
+            document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
         } else {
-            texto = leerJSON()
-            document.getElementById("titulo").innerHTML = texto.titulo;
+            leerJSON().then((result) => {
+                texto = result;
+                document.getElementById("titulo").innerHTML = texto.titulo;
+                document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
+            });
         }
-        document.getElementById("text").innerHTML = texto.contenido + "<div id='linea' class='w-100'></div>";
         document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
         document.getElementById("text").scroll({
             top: 0,
@@ -100,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         keystring.removeEventListener("keyup", press);
         keystring.blur();
     });
-})
+});
 
 function cambiartema(oscuro) {
     if (oscuro) {
@@ -137,7 +103,7 @@ function press() {
             } else {
                 document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             }
-            document.getElementById("ppm").innerHTML = Math.round((keystring.value.length/5 / ((Date.now() - inicio) / 1000 / 60)) * 100) / 100 + " ppm";
+            document.getElementById("ppm").innerHTML = Math.round((keystring.value.length / 5 / ((Date.now() - inicio) / 1000 / 60)) * 100) / 100 + " ppm";
 
             if (keystring.value.length == texto.contenido.length) {
                 document.getElementById("text").style.backgroundColor = "rgba(0, 0, 0, 0)";
@@ -164,4 +130,51 @@ function press() {
         });
         document.getElementById("fallos").innerHTML = "fallos: " + fallos + ", el " + Math.round(fallos / keystring.value.length * 100 * 100) / 100 + "%";
     }, 1)
+}
+
+function leerJSON() {
+    return new Promise(function (resolve, reject) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "text.json", true);
+        xhr.responseType = "json";
+        xhr.onload = (e) => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    const a = xhr.response;
+                    var result = {};
+                    let random1 = Math.round(Math.random() * 1);
+                    if (random1 == 0) {
+                        var random2 = (Math.round(Math.random() * 16) + 1);
+                    } else {
+                        var random2 = (Math.round(Math.random() * 9) + 1);
+                    }
+                    var s = a[Object.keys(a)[random1]]["capitulo_" + random2];
+                    let random3 = Math.round(Math.random() * s.contenido.length);
+                    if (random3 > s.contenido.length - 300) {
+                        random3 -= 300;
+                    }
+                    var str = "";
+                    var ss = s.contenido.substring(random3, s.contenido.length);
+                    var p = ss.indexOf(".");
+                    for (let i = 0; i < Math.random() * 2 + 1; i++) {
+                        ss = ss.substring(p + 2, ss.length);
+                        p = ss.indexOf(".");
+                        str += ss.substring(0, p + 2)
+                        result.contenido = str.substring(0, str.length - 1);
+                    }
+                    result.titulo = Object.keys(a)[random1].replace(/_/g, " ") + " - " + s.titulo;
+                    resolve(result);
+
+                } else {
+                    console.error(xhr.statusText);
+                    reject({ contenido: tpd, titulo: "PREDETERMINADO" });
+                }
+            }
+        };
+        xhr.onerror = (e) => {
+            console.error(xhr.statusText);
+            reject({ contenido: tpd, titulo: "PREDETERMINADO" });
+        };
+        xhr.send(null);
+    });
 }
