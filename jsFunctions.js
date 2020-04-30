@@ -93,12 +93,12 @@ function press() {
     setTimeout(() => {
         //corregir los espacios visualmente
         var escrito=keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') })
-        if(escrito.substring(escrito.length, escrito.length-1)==" "){
-            escrito=escrito.replace(/.$/,'&nbsp;')
-        }else{
-            escrito=keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') })
-        }
-        console.log(escrito)
+        // if(escrito.substring(escrito.length, escrito.length-1)==" "){
+        //     escrito=escrito.replace(/.$/,'&nbsp;')
+        // }else{
+        //     escrito=keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') })
+        // }
+
         if (texto.contenido.startsWith(keystring.value)) {
             if (keystring.value.length > 0) {
                 if (primero) {
