@@ -91,6 +91,14 @@ function cambiartema(oscuro) {
 function press() {
     var e = event
     setTimeout(() => {
+        //corregir los espacios visualmente
+        var escrito=keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') })
+        if(escrito.substring(escrito.length, escrito.length-1)==" "){
+            escrito=escrito.replace(/.$/,'&nbsp;')
+        }else{
+            escrito=keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') })
+        }
+        console.log(escrito)
         if (texto.contenido.startsWith(keystring.value)) {
             if (keystring.value.length > 0) {
                 if (primero) {
@@ -99,9 +107,9 @@ function press() {
                 }
             }
             if (tema) {
-                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .5);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .5);'>" + escrito + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             } else {
-                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-primary' style='background-color:rgba(0, 0, 0, .1);'>" + escrito + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             }
             document.getElementById("ppm").innerHTML = Math.round((keystring.value.length / 5 / ((Date.now() - inicio) / 1000 / 60)) * 100) / 100 + " ppm";
 
@@ -113,9 +121,9 @@ function press() {
             }
         } else {
             if (tema) {
-                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .5);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .5);'>" + escrito + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             } else {
-                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .1);'>" + keystring.value.replace(/  +/g, (match) => { return " " + Array(match.length).join('&nbsp;') }) + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
+                document.getElementById("text").innerHTML = "<span class='text-danger' style='background-color:rgba(0, 0, 0, .1);'>" + escrito + "</span>" + "<span id='scroll'></span>" + (texto.contenido.substring(keystring.value.length, texto.contenido.length)) + "<div id='linea' class='w-100'></div>";
             }
             if (e.key != "Backspace") {
                 if (e.type == "keyup" && primero == false) {
